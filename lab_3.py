@@ -170,7 +170,13 @@ def forward_kinematics(self, theta1, theta2, theta3):
         ################################################################################################
         # TODO: Implement the interpolation function
         ################################################################################################
-        return
+        t = t % 3
+        if t < 1:
+                return np.interpolate(self.ee_triangle_positions[0], self.ee_triangle_positions[1], t)
+        elif t < 2:
+                return np.interpolate(self.ee_triangle_positions[1], self.ee_triangle_positions[2], t - 1)
+        else:
+                return np.interpolate(self.ee_triangle_positions[2], self.ee_triangle_positions[0], t - 2)
 
     def ik_timer_callback(self):
         if self.joint_positions is not None:
