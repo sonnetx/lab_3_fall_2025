@@ -128,22 +128,28 @@ def forward_kinematics(self, theta1, theta2, theta3):
             # TODO: Implement the cost function
             # HINT: You can use the * notation on a list to "unpack" a list
             ################################################################################################
-            return None, None
+            ee_position = forward_kinematics(self, self.theta1, self.theta2, self.theta3)
+            difference_vector = ee_position - target_ee
+            squared_l2_norm = 0.0
+            for elem in difference_vector:
+                squared_l2_norm += elem * elem
+            return squared_l2_norm, difference_vector
 
         def gradient(theta, epsilon=1e-3):
             # Compute the gradient of the cost function using finite differences
             ################################################################################################
             # TODO: Implement the gradient computation
             ################################################################################################
-            return
+            numerical_gradient = (cost_function(theta + epsilon) - cost_function(theta - epsilon)) / (2 * epsilon)
+            
 
         theta = np.array(initial_guess)
-        learning_rate = None # TODO: Set the learning rate
+        learning_rate = 5 # TODO: Set the learning rate
         max_iterations = None # TODO: Set the maximum number of iterations
         tolerance = None # TODO: Set the tolerance for the L1 norm of the error
 
         cost_l = []
-        for _ in range(max_iterations):
+        for iteration in range(max_iterations):
             grad = gradient(theta)
 
             # Update the theta (parameters) using the gradient and the learning rate
@@ -152,9 +158,10 @@ def forward_kinematics(self, theta1, theta2, theta3):
             # to determine if IK has converged
             # TODO (BONUS): Implement the (quasi-)Newton's method instead of finite differences for faster convergence
             ################################################################################################
+            
 
         # print(f'Cost: {cost_l}') # Use to debug to see if you cost function converges within max_iterations
-
+        
         return theta
 
     def interpolate_triangle(self, t):
