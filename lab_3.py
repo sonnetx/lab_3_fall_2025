@@ -50,7 +50,7 @@ class InverseKinematics(Node):
         self.joint_positions = np.array([msg.position[msg.name.index(joint)] for joint in joints_of_interest])
         self.joint_velocities = np.array([msg.velocity[msg.name.index(joint)] for joint in joints_of_interest])
 
-    def forward_kinematics(self, theta1, theta2, theta3):
+def forward_kinematics(self, theta1, theta2, theta3):
         ################################################################################################
         # TODO: Compute the forward kinematics for the front right leg (should be easy after lab 2!)
         ################################################################################################
@@ -122,8 +122,8 @@ class InverseKinematics(Node):
 
     def inverse_kinematics(self, target_ee, initial_guess=[0, 0, 0]):
         def cost_function(theta):
-            # Compute the cost function and the L1 norm of the error
-            # return the cost and the L1 norm of the error
+            # Compute the cost function and the squared L2 norm of the error
+            # return the cost and the squared L2 norm of the error
             ################################################################################################
             # TODO: Implement the cost function
             # HINT: You can use the * notation on a list to "unpack" a list
