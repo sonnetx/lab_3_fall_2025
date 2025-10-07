@@ -174,14 +174,14 @@ def forward_kinematics(self, theta1, theta2, theta3):
 
     def ik_timer_callback(self):
         if self.joint_positions is not None:
+            start = time.time()
+
             target_ee = self.interpolate_triangle(self.t)
             self.target_joint_positions = self.inverse_kinematics(target_ee, self.joint_positions)
             current_ee = self.forward_kinematics(*self.joint_positions)
 
-            # update the current time for the triangle interpolation
-            ################################################################################################
-            # TODO: Implement the time update
-            ################################################################################################
+            end = time.time()
+            self.t += (end - start)
             
             self.get_logger().info(f'Target EE: {target_ee}, Current EE: {current_ee}, Target Angles: {self.target_joint_positions}, Target Angles to EE: {self.forward_kinematics(*self.target_joint_positions)}, Current Angles: {self.joint_positions}')
 
